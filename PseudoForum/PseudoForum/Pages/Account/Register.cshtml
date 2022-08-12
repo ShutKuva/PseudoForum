@@ -4,11 +4,87 @@
     ViewData["Title"] = "Registration";
 }
 <form method="post">
-    <label for="username" class="form-label">Username</label>
-    <input id="username" type="text" class="form-control w-25" placeholder="Luffy" asp-for="NewUser.Username">
-    <label for="email" class="form-label">Email</label>
-    <input id="email" type="email" class="form-control w-25" placeholder="example@example.ua" asp-for="NewUser.Email">
-    <label for="password" class="form-label">Password</label>
-    <input id="password" type="password" class="form-control w-25" asp-for="NewUser.Password">
-    <input type="submit" class="btn btn-primary"/>
+    <div>
+        <label for="username" class="form-label">Username</label>
+        <input id="username" type="text" class="form-control w-25" placeholder="Luffy" asp-for="NewUser.Username" required/>
+    </div>
+    <div>
+        <label for="email" class="form-label">Email</label>
+        <input id="email" type="email" class="form-control w-25" placeholder="example@example.ua" asp-for="NewUser.Email" required/>
+    </div>
+    <div>
+        <label for="password" class="form-label">Password</label>
+        <input id="password" type="password" class="form-control w-25" asp-for="NewUser.Password" required>
+    </div>
+    <input id="account-submit" type="submit" class="btn btn-primary"/>
 </form>
+
+<script>
+    let canBePosted = { username: false, email: false, password: false};
+
+    const accountSubmit = document.getElementById("account-submit");
+    accountSubmit.setAttribute("disabled", "");
+
+    const username = document.getElementById("username");
+    username.addEventListener("input", () => {
+        validateUsername();
+    });
+
+    const email = document.getElementById("email");
+    email.addEventListener("input", () => {
+        validateEmail();
+    });
+
+    function validateUsername() {
+        if (username.checkValidity()) {
+            canBePosted.username = true;
+            username.classList.remove("is-invalid");
+        }
+        else {
+            canBePosted.username = false;
+            username.classList.add("is-invalid");
+        }
+    }
+
+    function validateEmail() {
+        if (email.checkValidity()) {
+            canBePosted.email = true;
+            email.classList.remove("is-invalid");
+        }
+        else {
+            canBePosted.email = false;
+            email.classList.add("is-invalid");
+        }
+    }
+
+    const password = document.getElementById("password");
+    password.addEventListener("input", () => {
+        validatePassword();
+    });
+
+    function validatePassword() {
+        if (password.value.length > 8 && password.value.length < 32) {
+            canBePosted.password = true;
+            password.classList.remove("is-invalid");
+            tryToUndisable();
+        }
+        else {
+            canBePosted.password = false;
+            password.classList.add("is-invalid");
+        }
+    }
+
+    function tryToUndisable() {
+        let canBeUndisbled = true;
+        for (let i in canBePosted) {
+            if (!i) {
+                canBeUndisbled = false;
+                break;
+            }
+        }
+
+        if (canBeUndisbled) {
+            accountSubmit.removeAttribute("disabled");
+        }
+    }
+</script>

@@ -3,9 +3,73 @@
 @{
 }
 <form method="post">
-    <label for="login" class="form-label">Username or email</label>
-    <input id="login" type="text" class="form-control w-25" placeholder="Luffy" asp-for="LogedUser.Login">
-    <label for="password" class="form-label">Password</label>
-    <input id="password" type="password" class="form-control w-25" asp-for="LogedUser.Password">
-    <input type="submit" class="btn btn-primary"/>
+    <div>
+        <label for="login" class="form-label">Username or email</label>
+        <input id="login" type="text" class="form-control w-25" placeholder="Luffy" asp-for="LogedUser.Login">
+        <div class="invalid-feedback">
+            Login can not be empty
+        </div>
+    </div>
+    <div>
+        <label for="password" class="form-label">Password</label>
+        <input id="password" type="password" class="form-control w-25" asp-for="LogedUser.Password">
+        <div class="invalid-feedback">
+            Password length can not have less than 8 and more than 32 characters
+        </div>
+    </div>
+    <input id="account-submit" type="submit" class="btn btn-primary mt-2"/>
 </form>
+
+<script>
+    let canBePosted = { login: false, password: false};
+
+    const accountSubmit = document.getElementById("account-submit");
+    accountSubmit.setAttribute("disabled", "");
+
+    const login = document.getElementById("login");
+    login.addEventListener("input", () => {
+        validateLogin();
+    });
+
+    function validateLogin() {
+        if (login.value.length > 1) {
+            canBePosted.login = true;
+            login.classList.remove("is-invalid");
+        }
+        else {
+            canBePosted.login = false;
+            login.classList.add("is-invalid");
+        }
+    }
+
+    const password = document.getElementById("password");
+    password.addEventListener("input", () => {
+        validatePassword();
+    });
+
+    function validatePassword() {
+        if (password.value.length > 8 && password.value.length < 32) {
+            canBePosted.password = true;
+            password.classList.remove("is-invalid");
+            tryToUndisable();
+        }
+        else {
+            canBePosted.password = false;
+            password.classList.add("is-invalid");
+        }
+    }
+
+    function tryToUndisable() {
+        let canBeUndisbled = true;
+        for (let i in canBePosted) {
+            if (!i) {
+                canBeUndisbled = false;
+                break;
+            }
+        }
+
+        if (canBeUndisbled) {
+            accountSubmit.removeAttribute("disabled");
+        }
+    }
+</script>

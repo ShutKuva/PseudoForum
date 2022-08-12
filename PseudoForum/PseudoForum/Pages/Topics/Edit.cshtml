@@ -6,7 +6,27 @@
 }
 
 <form method="post">
-    <label for="name" class="form-label">Name</label>
-    <input name="name" id="name" type="text" class="form-control w-25" placeholder="One Piece is the best" asp-for="Name">
-    <input class="btn btn-primary" type="submit" value="@typeOfEditing"/>
+    <div>
+        <label for="name" class="form-label">Name</label>
+        <input name="name" id="name" type="text" class="form-control w-25" placeholder="One Piece is the best" asp-for="Name" required />
+    </div>
+    <input id="topic-submit" class="btn btn-primary" type="submit" value="@typeOfEditing"/>
 </form>
+
+<script>
+    const topicSubmit = document.getElementById("topic-submit");
+
+    topicSubmit.setAttribute("disabled", "");
+
+    const name = document.getElementById("name");
+    name.addEventListener("input", ()=> {
+        if (name.checkValidity()) {
+            name.classList.remove("is-invalid");
+            topicSubmit.removeAttribute("disabled");
+        }
+        else {
+            name.classList.add("is-invalid");
+            topicSubmit.setAttribute("disabled", "");
+        }
+    });
+</script>
