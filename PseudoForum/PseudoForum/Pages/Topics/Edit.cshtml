@@ -1,0 +1,12 @@
+﻿@page "{id:int?}"
+@model PseudoForum.Pages.Topics.EditModel
+@{
+    string typeOfEditing = Model.Id == -1 ? "Create" : "Edit";
+    ViewData["Title"] = typeOfEditing;
+}
+
+<form method="post">
+    <label for="name" class="form-label">Name</label>
+    <input name="name" id="name" type="text" class="form-control w-25" placeholder="One Piece is the best" asp-for="Name">
+    <input class="btn btn-primary" type="submit" value="@typeOfEditing"/>
+</form>

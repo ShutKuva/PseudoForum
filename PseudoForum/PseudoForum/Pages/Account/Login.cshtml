@@ -1,0 +1,11 @@
+﻿@page
+@model PseudoForum.Pages.Account.LoginModel
+@{
+}
+<form method="post">
+    <label for="login" class="form-label">Username or email</label>
+    <input id="login" type="text" class="form-control w-25" placeholder="Luffy" asp-for="LogedUser.Login">
+    <label for="password" class="form-label">Password</label>
+    <input id="password" type="password" class="form-control w-25" asp-for="LogedUser.Password">
+    <input type="submit" class="btn btn-primary"/>
+</form>

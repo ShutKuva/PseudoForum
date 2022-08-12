@@ -1,0 +1,14 @@
+﻿@page
+@model PseudoForum.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Registration";
+}
+<form method="post">
+    <label for="username" class="form-label">Username</label>
+    <input id="username" type="text" class="form-control w-25" placeholder="Luffy" asp-for="NewUser.Username">
+    <label for="email" class="form-label">Email</label>
+    <input id="email" type="email" class="form-control w-25" placeholder="example@example.ua" asp-for="NewUser.Email">
+    <label for="password" class="form-label">Password</label>
+    <input id="password" type="password" class="form-control w-25" asp-for="NewUser.Password">
+    <input type="submit" class="btn btn-primary"/>
+</form>

@@ -1,0 +1,29 @@
+﻿@using System.Security.Claims
+@if (User.Identity.IsAuthenticated)
+{
+   <form method="post" asp-page="/Account/Logout" class="navbar">
+       <button class="navbar-link" style="background: none; border: none;">
+            @if(User.HasClaim(claim => claim.Type == ClaimTypes.Name))
+            {
+                <span>@User.Claims.First(claim => claim.Type == ClaimTypes.Name).Value</span>
+            }
+            else
+            {
+                <span>Guest</span>
+            }
+            <span>, click to logout</span>
+        </button>
+   </form>
+}
+else
+{
+    <div>
+        <a class="btn btn-primary btn-secondary" asp-page="/Account/Login">
+            Log in
+        </a>
+        <a class="btn btn-primary btn-primary" asp-page="/Account/Register">
+            Sign in
+        </a>
+    </div>
+    
+}
